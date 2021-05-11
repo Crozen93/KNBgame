@@ -12,6 +12,9 @@ public class GameLogick : MonoBehaviour
     public Text ResultText;
     public Text ScoreText;
 
+    public Text ScoreText1;
+
+
     public GameObject Gobj1;
     public GameObject Gobj2;
     public GameObject Gobj3;
