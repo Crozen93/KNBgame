@@ -15,9 +15,11 @@ public class GameLogick : MonoBehaviour
     public Text ScoreText1;
 
 
-    public GameObject Gobj1;
-    public GameObject Gobj2;
-    public GameObject Gobj3;
+    public GameObject RockSci;
+    public GameObject PaperRock;
+    public GameObject SkiPaper;
+
+    public GameObject[] Enemy;
 
     [Header("Variables")]
     [SerializeField] private int Score;
@@ -46,10 +48,31 @@ public class GameLogick : MonoBehaviour
 
     void Round(int PlSc)
     {
+        RockSci.SetActive(false);
+        PaperRock.SetActive(false);
+        SkiPaper.SetActive(false);
+
+        Enemy[0].SetActive(false);
+        Enemy[1].SetActive(false);
+        Enemy[2].SetActive(false);
+
         EnemyScore = Random.Range(1, 3);
         PlayerScore = PlSc;
         PlayerStatus();
-        
+
+        if (EnemyScore == 1)
+        {
+            Enemy[0].SetActive(true);
+        }
+        if (EnemyScore == 2)
+        {
+            Enemy[1].SetActive(true);
+        }
+        if (EnemyScore == 3)
+        {
+            Enemy[2].SetActive(true);
+        }
+
 
 
         if (PlayerScore == 1 && EnemyScore == 1)
@@ -70,10 +93,10 @@ public class GameLogick : MonoBehaviour
 
         if (PlayerScore == 1 && EnemyScore == 2)
         {
-            GameResult = "Победа";
+            GameResult = "Проиграл";
             ResultText.text = GameResult;
-            Score++;
             ScoreText.text = Score.ToString();
+            PaperRock.SetActive(true);
         }
         if (PlayerScore == 1 && EnemyScore == 3)
         {
@@ -81,6 +104,7 @@ public class GameLogick : MonoBehaviour
             ResultText.text = GameResult;
             Score++;
             ScoreText.text = Score.ToString();
+            RockSci.SetActive(true);
         }
 
         if (PlayerScore == 2 && EnemyScore == 1)
@@ -89,17 +113,21 @@ public class GameLogick : MonoBehaviour
             ResultText.text = GameResult;
             Score++;
             ScoreText.text = Score.ToString();
+            PaperRock.SetActive(true);
+
         }
         if (PlayerScore == 2 && EnemyScore == 3)
         {
             GameResult = "Проиграл";
             ResultText.text = GameResult;
+            SkiPaper.SetActive(true);
         }
 
         if (PlayerScore == 3 && EnemyScore == 1)
         {
             GameResult = "Проиграл";
             ResultText.text = GameResult;
+            RockSci.SetActive(true);
         }
         if (PlayerScore == 3 && EnemyScore == 2)
         {
@@ -107,6 +135,7 @@ public class GameLogick : MonoBehaviour
             ResultText.text = GameResult;
             Score++;
             ScoreText.text = Score.ToString();
+            SkiPaper.SetActive(true);
         }
 
 
