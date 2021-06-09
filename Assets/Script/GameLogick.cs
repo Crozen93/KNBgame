@@ -5,21 +5,20 @@ using UnityEngine.UI;
 
 public class GameLogick : MonoBehaviour
 {
+  
     [Header("UI")]
-    public Button BtStone;
-    public Button BtPeper;
-    public Button BtNoj;
-    public Text ResultText;
-    public Text ScoreText;
+    [SerializeField] private Button BtStone;
+    [SerializeField] private Button BtPeper;
+    [SerializeField] private Button BtNoj;
+    [SerializeField] private Text ResultText;
+    [SerializeField] private Text ScoreText;
 
-    public Text ScoreText1;
+    [SerializeField] private GameObject RockSci;
+    [SerializeField] private GameObject PaperRock;
+    [SerializeField] private GameObject SkiPaper;
 
-
-    public GameObject RockSci;
-    public GameObject PaperRock;
-    public GameObject SkiPaper;
-
-    public GameObject[] Enemy;
+    [SerializeField] private GameObject[] ResultImage;
+    [SerializeField] private GameObject[] EnemyImage;
 
     [Header("Variables")]
     [SerializeField] private int Score;
@@ -30,50 +29,44 @@ public class GameLogick : MonoBehaviour
     [SerializeField] private string EnemySt;
     [SerializeField] private string GameResult;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
         BtStone.onClick.AddListener(() => Round(1));
         BtPeper.onClick.AddListener(() => Round(2));
-        BtNoj.onClick.AddListener(() => Round(3));
+        BtNoj.onClick.AddListener(()   => Round(3));
+
     }
 
-    // Update is called once per frame
-    void Update()
+    //Round
+        void Round(int PlSc)
     {
-        
-    }
 
-    void Round(int PlSc)
-    {
-        RockSci.SetActive(false);
-        PaperRock.SetActive(false);
-        SkiPaper.SetActive(false);
-
-        Enemy[0].SetActive(false);
-        Enemy[1].SetActive(false);
-        Enemy[2].SetActive(false);
-
-        EnemyScore = Random.Range(1, 3);
-        PlayerScore = PlSc;
-        PlayerStatus();
-
-        if (EnemyScore == 1)
+        //Disable image 
+        for (int i = 0; i < 2; i++)
         {
-            Enemy[0].SetActive(true);
+            ResultImage[i].SetActive(false);
+            EnemyImage[i].SetActive(false);
         }
-        if (EnemyScore == 2)
-        {
-            Enemy[1].SetActive(true);
-        }
-        if (EnemyScore == 3)
-        {
-            Enemy[2].SetActive(true);
-        }
+    
+        EnemyScore = Random.Range(1, 4);  //Enemy logick score random
+        PlayerScore = PlSc;               // Player logick score
+        PlayerStatus();                    //Debug Inspector
 
 
+        switch(EnemyScore)
+        {
+            case 1:
+                EnemyImage[0].SetActive(true);
+                break;
+            case 2:
+                EnemyImage[1].SetActive(true);
+                break;
+            case 3:
+                EnemyImage[2].SetActive(true);
+                break;
+        }
+          
 
         if (PlayerScore == 1 && EnemyScore == 1)
         {
@@ -90,6 +83,7 @@ public class GameLogick : MonoBehaviour
             GameResult = "Ничья";
             ResultText.text = GameResult;
         }
+
 
         if (PlayerScore == 1 && EnemyScore == 2)
         {
@@ -137,36 +131,36 @@ public class GameLogick : MonoBehaviour
             ScoreText.text = Score.ToString();
             SkiPaper.SetActive(true);
         }
-
-
     }
 
+
+    //Player and Enemy game status Test in Inspector
     void PlayerStatus()
     {
-        if (PlayerScore == 1)
+        switch (PlayerScore)
         {
-            PlayerSt = "Камень";
-        }
-        if (PlayerScore == 2)
-        {
-            PlayerSt = "Бумага";
-        }
-        if (PlayerScore == 3)
-        {
-            PlayerSt = "Ножницы";
+            case 1:
+                PlayerSt = "Камень";
+                break;
+            case 2:
+                PlayerSt = "Бумага";
+                break;
+            case 3:
+                PlayerSt = "Ножницы";
+                break;
         }
 
-        if (EnemyScore == 1)
+        switch (EnemyScore)
         {
-            EnemySt = "Камень";
-        }
-        if (EnemyScore == 2)
-        {
-            EnemySt = "Бумага";
-        }
-        if (EnemyScore == 3)
-        {
-            EnemySt = "Ножницы";
+            case 1:
+                EnemySt = "Камень";
+                break;
+            case 2:
+                EnemySt = "Бумага";
+                break;
+            case 3:
+                EnemySt = "Ножницы";
+                break;
         }
     }
 }
